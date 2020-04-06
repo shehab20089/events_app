@@ -23,30 +23,11 @@ class _EventPageState extends State<EventPage> {
     'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
   ];
-  bool clicked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: SizedBox(
-        width: ResponsiveMethods.wp(context, 100),
-        height: ResponsiveMethods.hp(context, 6.3),
-        child: Material(
-          color: Color(0xff813796),
-          child: InkWell(
-            onTap: () {
-              this.setState(() {
-                this.clicked = !this.clicked;
-              });
-            },
-            child: Center(
-              child: Text(
-                'قم بالحجز الان',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        ),
-      ),
+      bottomNavigationBar: buildBottomButton(context),
       backgroundColor: Colors.white,
       body: Container(
         child: Stack(children: <Widget>[
@@ -107,15 +88,15 @@ class _EventPageState extends State<EventPage> {
                               height: ResponsiveMethods.hp(context, 0.8),
                             ),
                             PriceType(
-                              type: 'الحجز العادي',
-                              price: 40,
+                              type: 'الحجز المميز',
+                              price: 80,
                             ),
                             SizedBox(
                               height: ResponsiveMethods.hp(context, 0.5),
                             ),
                             PriceType(
-                              type: 'الحجز العادي',
-                              price: 40,
+                              type: 'الحجز السريع',
+                              price: 120,
                             )
                           ],
                         )
@@ -142,20 +123,26 @@ class _EventPageState extends State<EventPage> {
               },
             ),
           ),
-          if (!clicked)
-            Opacity(
-              opacity: 0.3,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/InivolaTask.jpg"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                child: null /* add child content here */,
-              ),
-            ),
         ]),
+      ),
+    );
+  }
+
+  SizedBox buildBottomButton(BuildContext context) {
+    return SizedBox(
+      width: ResponsiveMethods.wp(context, 100),
+      height: ResponsiveMethods.hp(context, 6.3),
+      child: Material(
+        color: Color(0xff813796),
+        child: InkWell(
+          onTap: () {},
+          child: Center(
+            child: Text(
+              'قم بالحجز الان',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
       ),
     );
   }

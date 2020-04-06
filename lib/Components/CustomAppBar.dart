@@ -20,7 +20,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ResponsiveMethods.hp(context, 11),
+      height: ResponsiveMethods.hp(context, 13),
       width: ResponsiveMethods.wp(context, 100),
       color: Colors.transparent,
       child: Center(
