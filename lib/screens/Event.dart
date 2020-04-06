@@ -24,7 +24,7 @@ class _EventPageState extends State<EventPage> {
   void initState() {
     super.initState();
     initializeDateFormatting();
-    event = EventService.getEvent(6);
+    event = EventService.getEvent();
   }
 
   @override
