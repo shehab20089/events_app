@@ -8,6 +8,8 @@ import 'package:events_app/utilities/ResponsiveMethods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart' as intl;
 
 class EventPage extends StatefulWidget {
   EventPage({Key key}) : super(key: key);
@@ -21,6 +23,7 @@ class _EventPageState extends State<EventPage> {
   @override
   void initState() {
     super.initState();
+    initializeDateFormatting();
     event = EventService.getEvent(6);
   }
 
@@ -46,8 +49,7 @@ class _EventPageState extends State<EventPage> {
                           ),
                           buildEventTag(context, snapshot.data.interest),
                           buildEventTitle(context, snapshot.data.title),
-                          buildEventDate(
-                              context, snapshot.data.date.toString()),
+                          buildEventDate(context, snapshot.data.date),
                           buildEventLocation(context, snapshot.data.address),
                           Divider(
                             color: Colors.black12,
@@ -79,7 +81,7 @@ class _EventPageState extends State<EventPage> {
                                 Text(
                                   'تكلفه الدوره',
                                   style: TextStyle(
-                                      color: Colors.black26,
+                                      color: Colors.black38,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                       height: 0.7),
@@ -89,26 +91,30 @@ class _EventPageState extends State<EventPage> {
                                 ),
                                 Column(
                                   children: <Widget>[
-                                    PriceType(
-                                      type: 'الحجز العادي',
-                                      price: 40,
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          ResponsiveMethods.hp(context, 0.8),
-                                    ),
-                                    PriceType(
-                                      type: 'الحجز المميز',
-                                      price: 80,
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          ResponsiveMethods.hp(context, 0.5),
-                                    ),
-                                    PriceType(
-                                      type: 'الحجز السريع',
-                                      price: 120,
-                                    )
+                                    ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount:
+                                            snapshot.data.reservTypes.length,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Column(
+                                            children: <Widget>[
+                                              PriceType(
+                                                type: snapshot.data
+                                                    .reservTypes[index].name,
+                                                price: snapshot
+                                                        .data
+                                                        .reservTypes[index]
+                                                        .price +
+                                                    0.0,
+                                              ),
+                                              SizedBox(
+                                                height: ResponsiveMethods.hp(
+                                                    context, 0.8),
+                                              ),
+                                            ],
+                                          );
+                                        }),
                                   ],
                                 )
                               ],
@@ -190,7 +196,7 @@ class _EventPageState extends State<EventPage> {
           Text(
             'عن الدوره',
             style: TextStyle(
-                color: Colors.black26,
+                color: Colors.black38,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 height: 0.7),
@@ -201,7 +207,7 @@ class _EventPageState extends State<EventPage> {
           Text(
             eventDetails,
             style: TextStyle(
-              color: Colors.black26,
+              color: Colors.black38,
               letterSpacing: 0.001,
               height: 1,
               fontSize: 14.80,
@@ -214,6 +220,7 @@ class _EventPageState extends State<EventPage> {
 
   Padding buildTrainerArea(BuildContext context, String trainerName,
       String trainerImage, String trainerInfo) {
+    var imageRigtFormat = trainerImage.substring(5);
     return Padding(
       padding: EdgeInsets.only(
         right: ResponsiveMethods.wp(context, 5),
@@ -224,6 +231,7 @@ class _EventPageState extends State<EventPage> {
             children: <Widget>[
               CircleAvatar(
                 backgroundColor: Colors.red,
+                backgroundImage: NetworkImage("http$imageRigtFormat", scale: 1),
                 radius: 11,
               ),
               SizedBox(
@@ -232,7 +240,7 @@ class _EventPageState extends State<EventPage> {
               Text(
                 trainerName,
                 style: TextStyle(
-                  color: Colors.black26,
+                  color: Colors.black38,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
@@ -242,7 +250,7 @@ class _EventPageState extends State<EventPage> {
           Text(
             trainerInfo,
             style: TextStyle(
-              color: Colors.black26,
+              color: Colors.black38,
               letterSpacing: 0.0001,
               height: 1,
               fontSize: 12,
@@ -264,21 +272,23 @@ class _EventPageState extends State<EventPage> {
           FaIcon(
             FontAwesomeIcons.thumbtack,
             size: 14,
-            color: Colors.black26,
+            color: Colors.black38,
           ),
           SizedBox(
             width: ResponsiveMethods.wp(context, 3),
           ),
           Text(
             eventAddress,
-            style: TextStyle(color: Colors.black26, fontSize: 13, height: 0.8),
+            style: TextStyle(color: Colors.black38, fontSize: 13, height: 0.8),
           )
         ],
       ),
     );
   }
 
-  Padding buildEventDate(BuildContext context, String eventDate) {
+  Padding buildEventDate(BuildContext context, DateTime eventDate) {
+    var formatedDate = intl.DateFormat.yMMMMEEEEd('ar').format(eventDate);
+
     return Padding(
       padding: EdgeInsets.only(
           right: ResponsiveMethods.wp(context, 4),
@@ -289,15 +299,15 @@ class _EventPageState extends State<EventPage> {
           FaIcon(
             FontAwesomeIcons.calendarAlt,
             size: 14,
-            color: Colors.black26,
+            color: Colors.black38,
           ),
           SizedBox(
             width: ResponsiveMethods.wp(context, 3),
           ),
           Text(
-            'الاربعاء , 13 نيسان ,7:00 مساءا ',
+            formatedDate,
             style: TextStyle(
-              color: Colors.black26,
+              color: Colors.black38,
               fontSize: 13,
             ),
           )
@@ -314,7 +324,7 @@ class _EventPageState extends State<EventPage> {
       child: Text(
         '# $evenTag',
         style: TextStyle(
-          color: Colors.black26,
+          color: Colors.black38,
           fontSize: 14,
         ),
       ),
