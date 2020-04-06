@@ -37,17 +37,8 @@ class _EventPageState extends State<EventPage> {
               ),
               buildEventTag(context),
               buildEventTitle(context),
-              Padding(
-                padding: EdgeInsets.all(1),
-                child: Row(
-                  children: <Widget>[
-                    FaIcon(
-                      FontAwesomeIcons.calendarAlt,
-                      size: 15,
-                    )
-                  ],
-                ),
-              )
+              buildEventDate(context),
+              buildEventLocation(context)
             ],
           ),
         ),
@@ -92,6 +83,62 @@ class _EventPageState extends State<EventPage> {
               child: Text('Click Me'),
             ))
       ]),
+    );
+  }
+
+  Padding buildEventLocation(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          right: ResponsiveMethods.wp(context, 4),
+          top: ResponsiveMethods.hp(context, 0.6)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          FaIcon(
+            FontAwesomeIcons.thumbtack,
+            size: 14,
+            color: Colors.black26,
+          ),
+          SizedBox(
+            width: ResponsiveMethods.wp(context, 3),
+          ),
+          Text(
+            'عنوان الدوره أو الحدث بشكل كامل',
+            style: TextStyle(
+              color: Colors.black26,
+              fontSize: 12,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Padding buildEventDate(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          right: ResponsiveMethods.wp(context, 4),
+          top: ResponsiveMethods.hp(context, 0.6)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          FaIcon(
+            FontAwesomeIcons.calendarAlt,
+            size: 14,
+            color: Colors.black26,
+          ),
+          SizedBox(
+            width: ResponsiveMethods.wp(context, 3),
+          ),
+          Text(
+            'الاربعاء , 13 نيسان ,7:00 مساءا ',
+            style: TextStyle(
+              color: Colors.black26,
+              fontSize: 12,
+            ),
+          )
+        ],
+      ),
     );
   }
 
