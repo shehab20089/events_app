@@ -27,12 +27,14 @@ class _CuroselIndicatiorState extends State<CuroselIndicatior> {
             });
           },
           items: widget.imgList.map((i) {
+            print("http${i.substring(5)}");
             return Builder(
               builder: (BuildContext context) {
                 return Container(
                   // margin: EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(color: Colors.red),
-                  child: Image.network(i, fit: BoxFit.fill, width: 150000.0),
+                  decoration: BoxDecoration(color: Colors.purple),
+                  child: Image.network("http${i.substring(5)}",
+                      fit: BoxFit.fill, width: 150000.0),
                 );
               },
             );
