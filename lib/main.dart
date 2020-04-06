@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Teacher-App',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.purple,
         ),
         initialRoute: '/',
         routes: Routes.routes);

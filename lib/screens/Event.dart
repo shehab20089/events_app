@@ -2,8 +2,9 @@
 import 'package:events_app/Components/CustomAppBar.dart';
 import 'package:events_app/Components/curoselIndicatior.dart';
 import 'package:events_app/utilities/ResponsiveMethods.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class EventPage extends StatefulWidget {
   EventPage({Key key}) : super(key: key);
@@ -24,54 +25,104 @@ class _EventPageState extends State<EventPage> {
   bool clicked = false;
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
-      Column(
-        children: <Widget>[
-          CuroselIndicatior(
-            imgList: imgList,
-          )
-        ],
-      ),
-      Positioned(
-        top: 0,
-        child: CustomAppBar(
-          onSharePressed: () {
-            print('share');
-          },
-          onBackPressed: () {
-            // TODO Make Navigator.pop(context);
-
-            print('back presssed');
-          },
-          onFavPressed: () {
-            print('i like this event');
-          },
-        ),
-      ),
-      if (!clicked)
-        Opacity(
-          opacity: 0.3,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/InivolaTask.jpg"),
-                fit: BoxFit.fill,
+    return Scaffold(
+      body: Stack(children: <Widget>[
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              CuroselIndicatior(
+                imgList: imgList,
               ),
-            ),
-            child: null /* add child content here */,
+              buildEventTag(context),
+              buildEventTitle(context),
+              Padding(
+                padding: EdgeInsets.all(1),
+                child: Row(
+                  children: <Widget>[
+                    FaIcon(
+                      FontAwesomeIcons.calendarAlt,
+                      size: 15,
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
         ),
-      Positioned(
-          bottom: 0,
-          child: FlatButton(
-            color: Colors.red,
-            onPressed: () {
-              setState(() {
-                this.clicked = !this.clicked;
-              });
+        Positioned(
+          top: 0,
+          child: CustomAppBar(
+            onSharePressed: () {
+              print('share');
             },
-            child: Text('Click Me'),
-          ))
-    ]);
+            onBackPressed: () {
+              // TODO Make Naviga`tor.pop(context);
+
+              print('back presssed');
+            },
+            onFavPressed: () {
+              print('i like this event');
+            },
+          ),
+        ),
+        if (!clicked)
+          Opacity(
+            opacity: 0.3,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/InivolaTask.jpg"),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: null /* add child content here */,
+            ),
+          ),
+        Positioned(
+            bottom: 0,
+            child: FlatButton(
+              color: Colors.red,
+              onPressed: () {
+                setState(() {
+                  this.clicked = !this.clicked;
+                });
+              },
+              child: Text('Click Me'),
+            ))
+      ]),
+    );
+  }
+
+  Padding buildEventTag(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          right: ResponsiveMethods.wp(context, 4),
+          top: ResponsiveMethods.hp(context, 0.7)),
+      child: Text(
+        '# موسيقي',
+        style: TextStyle(
+          color: Colors.black26,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
+
+  Padding buildEventTitle(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        right: ResponsiveMethods.wp(context, 4),
+      ),
+      child: Text(
+        'الأسم الكامل للدوره بشكل افتراضي من أجل أظهار شكل التصميم',
+        style: TextStyle(
+            color: Colors.black38,
+            fontSize: 17,
+            height: 1,
+            fontWeight: FontWeight.bold),
+      ),
+    );
   }
 }
