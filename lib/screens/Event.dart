@@ -1,5 +1,6 @@
 //a folder to put all my app screens as here for Events page.
 import 'package:events_app/Components/CustomAppBar.dart';
+import 'package:events_app/Components/PriceType.dart';
 import 'package:events_app/Components/curoselIndicatior.dart';
 import 'package:events_app/utilities/ResponsiveMethods.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,63 +27,211 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: <Widget>[
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              CuroselIndicatior(
-                imgList: imgList,
+      bottomNavigationBar: SizedBox(
+        width: ResponsiveMethods.wp(context, 100),
+        height: ResponsiveMethods.hp(context, 6.3),
+        child: Material(
+          color: Color(0xff813796),
+          child: InkWell(
+            onTap: () {
+              this.setState(() {
+                this.clicked = !this.clicked;
+              });
+            },
+            child: Center(
+              child: Text(
+                'قم بالحجز الان',
+                style: TextStyle(color: Colors.white),
               ),
-              buildEventTag(context),
-              buildEventTitle(context),
-              buildEventDate(context),
-              buildEventLocation(context)
-            ],
-          ),
-        ),
-        Positioned(
-          top: 0,
-          child: CustomAppBar(
-            onSharePressed: () {
-              print('share');
-            },
-            onBackPressed: () {
-              // TODO Make Naviga`tor.pop(context);
-
-              print('back presssed');
-            },
-            onFavPressed: () {
-              print('i like this event');
-            },
-          ),
-        ),
-        if (!clicked)
-          Opacity(
-            opacity: 0.3,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/InivolaTask.jpg"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              child: null /* add child content here */,
             ),
           ),
-        Positioned(
-            bottom: 0,
-            child: FlatButton(
-              color: Colors.red,
-              onPressed: () {
-                setState(() {
-                  this.clicked = !this.clicked;
-                });
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: Container(
+        child: Stack(children: <Widget>[
+          SingleChildScrollView(
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  CuroselIndicatior(
+                    imgList: imgList,
+                  ),
+                  buildEventTag(context),
+                  buildEventTitle(context),
+                  buildEventDate(context),
+                  buildEventLocation(context),
+                  Divider(
+                    color: Colors.black12,
+                  ),
+                  buildTrainerArea(context),
+                  SizedBox(
+                    height: ResponsiveMethods.hp(context, 1),
+                  ),
+                  Divider(
+                    color: Colors.black12,
+                  ),
+                  buildAboutArea(context),
+                  Divider(
+                    color: Colors.black12,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: ResponsiveMethods.hp(context, 0.2),
+                      right: ResponsiveMethods.wp(context, 4),
+                      left: ResponsiveMethods.wp(context, 4),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'تكلفه الدوره',
+                          style: TextStyle(
+                              color: Colors.black26,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              height: 0.7),
+                        ),
+                        SizedBox(
+                          height: ResponsiveMethods.hp(context, 1),
+                        ),
+                        Column(
+                          children: <Widget>[
+                            PriceType(
+                              type: 'الحجز العادي',
+                              price: 40,
+                            ),
+                            SizedBox(
+                              height: ResponsiveMethods.hp(context, 0.8),
+                            ),
+                            PriceType(
+                              type: 'الحجز العادي',
+                              price: 40,
+                            ),
+                            SizedBox(
+                              height: ResponsiveMethods.hp(context, 0.5),
+                            ),
+                            PriceType(
+                              type: 'الحجز العادي',
+                              price: 40,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            child: CustomAppBar(
+              onSharePressed: () {
+                print('share');
               },
-              child: Text('Click Me'),
-            ))
-      ]),
+              onBackPressed: () {
+                // TODO Make Naviga`tor.pop(context);
+
+                print('back presssed');
+              },
+              onFavPressed: () {
+                print('i like this event');
+              },
+            ),
+          ),
+          if (!clicked)
+            Opacity(
+              opacity: 0.3,
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/InivolaTask.jpg"),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: null /* add child content here */,
+              ),
+            ),
+        ]),
+      ),
+    );
+  }
+
+  Padding buildAboutArea(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: ResponsiveMethods.hp(context, 0.6),
+        right: ResponsiveMethods.wp(context, 4),
+        left: ResponsiveMethods.wp(context, 4),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'عن الدوره',
+            style: TextStyle(
+                color: Colors.black26,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                height: 0.7),
+          ),
+          SizedBox(
+            height: ResponsiveMethods.hp(context, 1),
+          ),
+          Text(
+            'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحه, لقد تم توليد هذا النص من مولد النص العربي. حيث يمكنك ان تولد مثل هذا النص او العديد من النصوص الاخري اضافه الي زياده عدد الحروف التي يولدها التطبيق',
+            style: TextStyle(
+              color: Colors.black26,
+              letterSpacing: 0.001,
+              height: 1,
+              fontSize: 14.80,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Padding buildTrainerArea(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        right: ResponsiveMethods.wp(context, 5),
+      ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 11,
+              ),
+              SizedBox(
+                width: ResponsiveMethods.wp(context, 3),
+              ),
+              Text(
+                'اسم المدرب',
+                style: TextStyle(
+                  color: Colors.black26,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              )
+            ],
+          ),
+          Text(
+            'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحه, لقد تم توليد هذا النص من مولد النص العربي.',
+            style: TextStyle(
+              color: Colors.black26,
+              letterSpacing: 0.0001,
+              height: 1,
+              fontSize: 12,
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -104,10 +253,7 @@ class _EventPageState extends State<EventPage> {
           ),
           Text(
             'عنوان الدوره أو الحدث بشكل كامل',
-            style: TextStyle(
-              color: Colors.black26,
-              fontSize: 12,
-            ),
+            style: TextStyle(color: Colors.black26, fontSize: 13, height: 0.8),
           )
         ],
       ),
@@ -118,7 +264,7 @@ class _EventPageState extends State<EventPage> {
     return Padding(
       padding: EdgeInsets.only(
           right: ResponsiveMethods.wp(context, 4),
-          top: ResponsiveMethods.hp(context, 0.6)),
+          top: ResponsiveMethods.hp(context, 0.7)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -134,7 +280,7 @@ class _EventPageState extends State<EventPage> {
             'الاربعاء , 13 نيسان ,7:00 مساءا ',
             style: TextStyle(
               color: Colors.black26,
-              fontSize: 12,
+              fontSize: 13,
             ),
           )
         ],
