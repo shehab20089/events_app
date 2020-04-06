@@ -44,21 +44,26 @@ class _EventPageState extends State<EventPage> {
                           CuroselIndicatior(
                             imgList: snapshot.data.img,
                           ),
-                          buildEventTag(context),
-                          buildEventTitle(context),
-                          buildEventDate(context),
-                          buildEventLocation(context),
+                          buildEventTag(context, snapshot.data.interest),
+                          buildEventTitle(context, snapshot.data.title),
+                          buildEventDate(
+                              context, snapshot.data.date.toString()),
+                          buildEventLocation(context, snapshot.data.address),
                           Divider(
                             color: Colors.black12,
                           ),
-                          buildTrainerArea(context),
+                          buildTrainerArea(
+                              context,
+                              snapshot.data.trainerName,
+                              snapshot.data.trainerImg,
+                              snapshot.data.trainerInfo),
                           SizedBox(
                             height: ResponsiveMethods.hp(context, 1),
                           ),
                           Divider(
                             color: Colors.black12,
                           ),
-                          buildAboutArea(context),
+                          buildAboutArea(context, snapshot.data.occasionDetail),
                           Divider(
                             color: Colors.black12,
                           ),
@@ -172,7 +177,7 @@ class _EventPageState extends State<EventPage> {
     );
   }
 
-  Padding buildAboutArea(BuildContext context) {
+  Padding buildAboutArea(BuildContext context, String eventDetails) {
     return Padding(
       padding: EdgeInsets.only(
         top: ResponsiveMethods.hp(context, 0.6),
@@ -194,7 +199,7 @@ class _EventPageState extends State<EventPage> {
             height: ResponsiveMethods.hp(context, 1),
           ),
           Text(
-            'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحه, لقد تم توليد هذا النص من مولد النص العربي. حيث يمكنك ان تولد مثل هذا النص او العديد من النصوص الاخري اضافه الي زياده عدد الحروف التي يولدها التطبيق',
+            eventDetails,
             style: TextStyle(
               color: Colors.black26,
               letterSpacing: 0.001,
@@ -207,7 +212,8 @@ class _EventPageState extends State<EventPage> {
     );
   }
 
-  Padding buildTrainerArea(BuildContext context) {
+  Padding buildTrainerArea(BuildContext context, String trainerName,
+      String trainerImage, String trainerInfo) {
     return Padding(
       padding: EdgeInsets.only(
         right: ResponsiveMethods.wp(context, 5),
@@ -224,7 +230,7 @@ class _EventPageState extends State<EventPage> {
                 width: ResponsiveMethods.wp(context, 3),
               ),
               Text(
-                'اسم المدرب',
+                trainerName,
                 style: TextStyle(
                   color: Colors.black26,
                   fontSize: 15,
@@ -234,7 +240,7 @@ class _EventPageState extends State<EventPage> {
             ],
           ),
           Text(
-            'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحه, لقد تم توليد هذا النص من مولد النص العربي.',
+            trainerInfo,
             style: TextStyle(
               color: Colors.black26,
               letterSpacing: 0.0001,
@@ -247,7 +253,7 @@ class _EventPageState extends State<EventPage> {
     );
   }
 
-  Padding buildEventLocation(BuildContext context) {
+  Padding buildEventLocation(BuildContext context, String eventAddress) {
     return Padding(
       padding: EdgeInsets.only(
           right: ResponsiveMethods.wp(context, 4),
@@ -264,7 +270,7 @@ class _EventPageState extends State<EventPage> {
             width: ResponsiveMethods.wp(context, 3),
           ),
           Text(
-            'عنوان الدوره أو الحدث بشكل كامل',
+            eventAddress,
             style: TextStyle(color: Colors.black26, fontSize: 13, height: 0.8),
           )
         ],
@@ -272,7 +278,7 @@ class _EventPageState extends State<EventPage> {
     );
   }
 
-  Padding buildEventDate(BuildContext context) {
+  Padding buildEventDate(BuildContext context, String eventDate) {
     return Padding(
       padding: EdgeInsets.only(
           right: ResponsiveMethods.wp(context, 4),
@@ -300,13 +306,13 @@ class _EventPageState extends State<EventPage> {
     );
   }
 
-  Padding buildEventTag(BuildContext context) {
+  Padding buildEventTag(BuildContext context, String evenTag) {
     return Padding(
       padding: EdgeInsets.only(
           right: ResponsiveMethods.wp(context, 4),
           top: ResponsiveMethods.hp(context, 0.7)),
       child: Text(
-        '# موسيقي',
+        '# $evenTag',
         style: TextStyle(
           color: Colors.black26,
           fontSize: 14,
@@ -315,13 +321,13 @@ class _EventPageState extends State<EventPage> {
     );
   }
 
-  Padding buildEventTitle(BuildContext context) {
+  Padding buildEventTitle(BuildContext context, String eventTitle) {
     return Padding(
       padding: EdgeInsets.only(
         right: ResponsiveMethods.wp(context, 4),
       ),
       child: Text(
-        'الأسم الكامل للدوره بشكل افتراضي من أجل أظهار شكل التصميم',
+        eventTitle,
         style: TextStyle(
             color: Colors.black38,
             fontSize: 17,
